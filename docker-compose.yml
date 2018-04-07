@@ -1,0 +1,46 @@
+version: '2'
+services:
+    postgres:
+        image: postgres:10.1-alpine
+        volumes:
+           - /var/lib/postgresql/docker/:/var/lib/postgresql/data/
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: <buheheheh>
+        networks:
+          - db
+        ports:
+          - "5432:5432"
+    mattermost:
+        image: mattermost/milek:1.1
+        restart: always
+        volumes:
+            - /docker/mattermost/logs/:/mattermost/logs
+            - /docker/mattermost/data/:/mattermost/data 
+            - /docker/mattermost/config/:/mattermost/config/:ro
+        networks:
+          - proxy
+          - db
+        depends_on:
+          - postgres
+        ports:
+          - "85:85"
+    nginx:
+        image: richarvey/nginx-php-fpm:1.4.0
+        restart: always
+        volumes:
+            - /var/log/nginx/:/var/log/nginx/
+            - /etc/letsencrypt/:/etc/letsencrypt/:ro
+            - /docker/nginx/:/etc/nginx/:ro
+        ports:
+            - "80:80"
+            - "443:443"
+        networks:  
+            - proxy
+        depends_on:
+            - mattermost
+
+networks:
+  proxy:
+  db:
+
