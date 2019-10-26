@@ -37,7 +37,7 @@ RUN addgroup -g ${PGID} mattermost \
 
 USER mattermost 
 
-#Healthcheck to make sure container is ready
+#Healthcheck to make sure container is ready 
 HEALTHCHECK CMD curl --fail http://localhost:8000 || exit 1
 
 # Configure entrypoint and command
