@@ -9,7 +9,6 @@ ARG edition=enterprise
 ARG PUID=2000
 ARG PGID=2000
 
-
 # Install some needed packages
 RUN apk add --no-cache \
 	ca-certificates \
