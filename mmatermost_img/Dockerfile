@@ -2,7 +2,7 @@ FROM alpine:3.8
 
 # Some ENV variables
 ENV PATH="/mattermost/bin:${PATH}"
-ENV MM_VERSION=5.36.1
+ENV MM_VERSION=6.0.2
 # Build argument to set Mattermost edition
 ARG edition=enterprise
 ARG PUID=2000
@@ -42,7 +42,7 @@ HEALTHCHECK CMD curl --fail http://localhost:8000 || exit 1
 COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 WORKDIR /mattermost
-CMD ["platform"]
+CMD ["mattermost"]
 
 # Expose port 8000 of the container
 EXPOSE 8000
